@@ -21,4 +21,6 @@ I had a few data sources to choose from for my chosen brief. I had a few things 
 
 ### How AI helped
 - I read the brief of the project that information lab wants us to create and utilised Claude to understand the nuances of what is expected of us by defining key terms I was unaware of (pagination, rate limits and how an API actually works) and understanding their impacting. From it I understood that they want us to use an API to download data into GitHub unchanged, then clean the data into a clean consistent form accounting for the different defects. At that point it is expected of us to then build something useful for a clearly defined audience with a README, explaining the entire project. Ensuring to explain cohesively how everything works, through daily commits.
-- 
+- Used it to understand authentication concepts (headers, tokens) and debug a real bug where my API key was loading as None due to a naming mismatch between my .env file and my code — I diagnosed and fixed this myself once I understood what to check.
+- Learned the general shape of an authenticated API request (headers, GET calls, status codes) through explanation and small unrelated examples, then wrote my own extraction code against football-data.org's actual endpoints.
+- Learned to inspect a large JSON response progressively (checking top-level keys, then count, then one example) rather than dumping the whole thing - this is now how I explore and save raw API data in the pipeline itself.

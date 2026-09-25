@@ -11,3 +11,8 @@
 - Loaded in the API key with particular notation, as advised on the website. It asks for headers to be enveloped in a particular way.
 - Free plan notes that Premier league is included, however when attempting to access it it states that it isn't.
 - Queired to find what competitions are included and it says it is.
+- Everything worked having recommitted, I assume this was what fixed the error code, I think there was a difference in what the key was being named as because I renamed and removed a capital letter.
+- Loading in API and printing a stsus then the actual data
+- Loaded in matches and standings, both returning full current season
+- Now going to look at the structure better and try to understand how things are 
+- Indented data to make it readable and printed keys of the data since it was clearly a bunch of nested dictionaries
