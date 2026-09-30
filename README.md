@@ -25,3 +25,6 @@ I had a few data sources to choose from for my chosen brief. I had a few things 
 - Learned the general shape of an authenticated API request (headers, GET calls, status codes) through explanation and small unrelated examples, then wrote my own extraction code against football-data.org's actual endpoints.
 - Learned to inspect a large JSON response progressively (checking top-level keys, then count, then one example) rather than dumping the whole thing - this is now how I explore and save raw API data in the pipeline itself.
 - Used AI to teach me what duckDB was and how to install it
+
+### Future Improvements
+- Plan the data source testing better. I had trusted much of what was on the website for the data available to me. If I had begun by testing the limits of the data I would have perhaps had more accurate metrics like injuries and not been limited for head to head form for example. Beginning by exhausting the limits of the data available to me is an important lesson for next time.

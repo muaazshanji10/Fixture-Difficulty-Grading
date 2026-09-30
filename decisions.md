@@ -19,6 +19,12 @@
 - From first calling the data it is clear that there is no pagination when data is requested since all 380 games are outputted. So it may benefit when I do call data to input the ranges as present till next match so that it's cleaner to filter data.
 - I needed to look at the rest of the data and begin noting down what my metrics would be. 
 - Tried seeing how far back the data went and got data for 2023/24, 2024/25, and 2025/26 seasons which is sufficient data to make a head to head metric.
-- Form would be another potenital metric, league standing another, goal difference another and home and away another.
+- Form would be another potential metric, league standing another, goal difference another and home and away another.
 - Let's now see if we can attain all that from a matches and standings call.
 - Next I wanted to pull data for just one match so that I could see what I had at disposal, to build my metrics. So I decided to use DuckDB an embedded SQL database to see the data more cleanly in a table.
+- I printed the data into a table but everything printed as one column, so I needed to query it to ensure columns were cleanly seperated
+- I found it easier to look at an indented raw json file to see the data
+- I can now see the raw data of one match clearly so I know the keys of the sub dictionaries and then the sub dictionaries in those sub dictionaries. I now need to sql query it to get it into a cleaner form.
+- Did the same for standings for one season so I could see things more cleanly and dot chain to get results I actually need, this time I had to unnest the data as I was looking at multiple rows
+- from these two cleaned tables we now have: points tally and position which can be rolled into one metric; goal difference which will be scaled into a metric and home or away which will also be its own metric.
+- We need to attain form and head to head from the data as it isn't its own category
