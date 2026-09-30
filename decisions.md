@@ -3,7 +3,7 @@
 - Understand what data we have available to us
 - Understand how it is structured
 
-#### Pipeline 1
+#### Pipeline
 - Firstly, I had to load in the API key in a way in which it never gets uploaded to git as I don't want people to have access to it. This is because it is unique to me and how my project consistently accesses the website data.
 - I created a file called .gitignore to instruct git to ignire a file called .env which contained my API key.
 - Git repositry didn't contain ".env" helped to confirm it wasn't being read.
@@ -16,3 +16,9 @@
 - Loaded in matches and standings, both returning full current season
 - Now going to look at the structure better and try to understand how things are 
 - Indented data to make it readable and printed keys of the data since it was clearly a bunch of nested dictionaries
+- From first calling the data it is clear that there is no pagination when data is requested since all 380 games are outputted. So it may benefit when I do call data to input the ranges as present till next match so that it's cleaner to filter data.
+- I needed to look at the rest of the data and begin noting down what my metrics would be. 
+- Tried seeing how far back the data went and got data for 2023/24, 2024/25, and 2025/26 seasons which is sufficient data to make a head to head metric.
+- Form would be another potenital metric, league standing another, goal difference another and home and away another.
+- Let's now see if we can attain all that from a matches and standings call.
+- Next I wanted to pull data for just one match so that I could see what I had at disposal, to build my metrics. So I decided to use DuckDB an embedded SQL database to see the data more cleanly in a table.
