@@ -27,7 +27,7 @@
     - Form gives FPL users an indication as to how much momentum a team has. It can demonstrate that even if the team isn't doing the best over the season outlook they are in a purple patch which means that they are more likely to win. This contributes to the grader because when teams win in FPL most players get a baseline points tally even despite heavy individual player contribution and so it is often beneficial to have a player from a team likely to win. 
     - Goal difference is another metric and this is used since it can help to paint a broader picture, for players over how good a team actually is. FPL points are boosted for players who are defenders/midfielders and their teams concede no goals. Whilst players who are attackers and have scored many goals get many points too and so these will contribute to deciding whether a fixture is more dfficult or less difficult.
     - Head to head is an important metric since it compensates for the fact that certain games have more than just form or points tally as key contributors. In some games form goes out of the window due to team style clashes, players historically turning up against particular opponents or just general occaions of derbies changing the atmosphere of a game. Therefore accounting for how teams are head to head which we can do off a 6 game and past 3 year basis is an important factor too.
-    - Home or away, perhaps the least important but still a signficant factor since across most stats a team performs better at home than away. 
+    - Home or away, perhaps the least important but still a signficant factor since across most stats a team performs better at home than away. Richard Pollard’s landmark 1986 study analyzing the English Football League from 1888 to 1984 established that home teams consistently won 64% of all total points distributed. Based on this baseline, researchers quantify that teams are 1.78 times more efficient at generating league points when playing at home compared to away.
 - Next I wanted to pull data for just one match so that I could see what I had at disposal, to build my metrics. So I decided to use DuckDB an embedded SQL database to see the data more cleanly in a table and use SQL to filter out what I didn't need
 - I printed the data into a table but everything printed as one column, so I needed to query it to ensure columns were cleanly seperated
 - I found it easier to look at an indented raw json file to see the data
@@ -36,8 +36,9 @@
 - from these two cleaned tables we now have: points tally and position which can be rolled into one metric; goal difference which will be scaled into a metric and home or away which will also be its own metric.
 - We need to attain form and head to head from the data as it isn't its own category
 - Form was supposed to be attained from the API but it returned NONE and so it is something we are going to have to create ourselves.
-- Form will be tricky to attain because teams matches are split across two columns, its not that each team has their name and whether they won its structured home_team or away_team.
+- Form will be tricky to attain because teams matches are split across two columns, its not that each team has their name and whether they won, its structured home_team or away_team.
 - Lets pull up past 5 gameweeks and see how things are structured in our current one match table. I created a new file called Creating_form_code
+- Currently its showing past 10 matches but we want past 5 matches for a specific team so I'm going to add a where statement = team name
 
 
 
