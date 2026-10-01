@@ -39,7 +39,15 @@
 - Form will be tricky to attain because teams matches are split across two columns, its not that each team has their name and whether they won, its structured home_team or away_team.
 - Lets pull up past 5 gameweeks and see how things are structured in our current one match table. I created a new file called Creating_form_code
 - Currently its showing past 10 matches but we want past 5 matches for a specific team so I'm going to add a where statement = team name
-
-
+- Realising this will hardcode the concept for a particular team and so will make the sql too difficult to apply for every team
+- Need to make a table which shows each result as a separate result for each team, ie one fixture means a loss for one team and a win for another.
+- we need a new column player and opponent and we filter based off home team being team first then away team being team and having it as separate rows then partitioning by player and summing points tally.
+- Form isn't a field the standings endpoint actually gives us (it came back as None for every team), so I needed to derive it myself from the matches data I'd already cleaned and saved.
+- The problem was that matches_clean has one row per match with home_team and away_team as separate columns, so filtering by one team's name would only ever catch half their games, missing every match they played on the other side.
+- To fix this I used a UNION ALL to split every match into two rows, one from the home team's perspective and one from the away team's, each with a team and opponent column and a points value worked out from the winner field depending which side that row represents.
+- winner only ever says HOME_TEAM, AWAY_TEAM or DRAW, not an actual team name, so I had to write the points logic separately in each half of the union, checking HOME_TEAM in the home half and AWAY_TEAM in the away half, otherwise the same win could get read backwards depending which perspective that row came from.
+- Once every match was reshaped into one row per team, I used ROW_NUMBER() partitioned by team and ordered by date descending to rank each team's games from most recent to oldest, since LIMIT on its own can't restrict rows separately per team, only across the whole table at once.
+- I filtered down to rank 5 or lower per team, then summed the points grouped by team, so the final form score is built off a team's actual last 5 games played rather than assuming exactly one game per gameweek, which avoids the issue of postponed or rearranged fixtures throwing off the count.
+- When running I realised, my data included all future dates and so the sql was querying future games and assuming since they had no result it was a loss, so I had to filter to present date.
 
 
