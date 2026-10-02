@@ -1,8 +1,3 @@
-#### Plan 1
-- Load in the API key into VSCODE
-- Understand what data we have available to us
-- Understand how it is structured
-
 #### Pipeline
 - Firstly, I had to load in the API key in a way in which it never gets uploaded to git as I don't want people to have access to it. This is because it is unique to me and how my project consistently accesses the website data.
 - I created a file called .gitignore to instruct git to ignire a file called .env which contained my API key.
@@ -13,6 +8,8 @@
 - Queired to find what competitions are included and it says the Premier league is.
 - Everything worked having recommitted, I assume this was what fixed the error code, I think there was a difference in what the key was being named as because I renamed and removed a capital letter and so the API wasn't correctly loading in.
 - Loading in API and printing a stsus then the actual data
+- Every response from the API comes back with a status code, a number the server (football-data.org) attaches to say how the request went. I had already been printing it to check things were working, but it matters more now that I'm looping over several seasons. 200 means the request worked, 403 means the data isn't included in my plan or the key is wrong, 404 means the URL doesn't exist and 429 means I've made too many requests and hit the rate limit.
+- I added raise_for_status() straight after each call so the script stops with an error if the status code is a failure. Without it a 403 or 429 would carry on, and the API's error message would be saved into the raw file as if it were match data, which I'd only discover later when the cleaning broke. This keeps the raw files trustworthy.
 - Loaded in matches and standings, both returning full current season
 - Now going to look at the structure better and try to understand how things are 
 - Indented data to make it readable and printed keys of the data since it was clearly a bunch of nested dictionaries
@@ -52,6 +49,6 @@
 - Now we had to show head to head form, that means we have to bring up the past 3 season data, and also as per brief save it as raw json.
 - The difficulty here again will we that each fixture will need to be viewed differently, ie as a team being the team then being the opponent.
 - We will need to utilise this union all structure we just learnt again. The clean table we build will essentially need to sum the points gained by a team in the last 6 head to head fixtures and then based on the disparity between the two provide a contributing multiplier/scaler to the difficulty fixture grader. 
+- The free plan has a rate limit of 10 calls per minute, which is one call every 6 seconds. Looping through multiple seasons fires requests back to back, so I used time.sleep(7) to pause the script for 7 seconds between calls. This keeps me safely under the limit with a small buffer, so I don't get 429 errors and the script runs start to finish without my intervention.
 - 
-
 
