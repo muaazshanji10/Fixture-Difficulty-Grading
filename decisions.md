@@ -50,5 +50,8 @@
 - The difficulty here again will we that each fixture will need to be viewed differently, ie as a team being the team then being the opponent.
 - We will need to utilise this union all structure we just learnt again. The clean table we build will essentially need to sum the points gained by a team in the last 6 head to head fixtures and then based on the disparity between the two provide a contributing multiplier/scaler to the difficulty fixture grader. 
 - The free plan has a rate limit of 10 calls per minute, which is one call every 6 seconds. Looping through multiple seasons fires requests back to back, so I used time.sleep(7) to pause the script for 7 seconds between calls. This keeps me safely under the limit with a small buffer, so I don't get 429 errors and the script runs start to finish without my intervention.
-- 
+- we need to have a particular team that we give the prompt based off of what the next fixture is then use that to attain past 6 matches tally points wise. We should approach it in a for a certain given fixture, set home_team as player then away_team as opponent and for every match with those two find results and sum points.
+- we need to account for the fact that some teams are promoted and have less than 6 meetings, in the premier league. This will be later when adding average.
+- It'll essentially be same code as form except we partition by team and opponent
+
 
