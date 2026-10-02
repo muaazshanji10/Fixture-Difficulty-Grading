@@ -53,5 +53,8 @@
 - we need to have a particular team that we give the prompt based off of what the next fixture is then use that to attain past 6 matches tally points wise. We should approach it in a for a certain given fixture, set home_team as player then away_team as opponent and for every match with those two find results and sum points.
 - we need to account for the fact that some teams are promoted and have less than 6 meetings, in the premier league. This will be later when adding average.
 - It'll essentially be same code as form except we partition by team and opponent
+- Now that all the individual stats exist, I need to join them into one table that is rebuilt from the present day on every refresh. A refresh script calls the API (spaced out to stay within the rate limit), saves the raw responses unchanged, and rebuilds the clean tables from them. The Streamlit app never calls the API itself, it only reads the finished tables.
+- For each team I take their next unplayed fixture and attach the opponent's form, league performance and goal difference, plus the team's own head to head record against that opponent and whether they are home or away.
+- Each metric is scaled to 0-1 and given a weight, and the weighted sum becomes a 0-100 difficulty score. That score is mapped to a colour band with fixed thresholds, and the result is presented in a Streamlit app.
 
 
