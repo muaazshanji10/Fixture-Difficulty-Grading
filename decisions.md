@@ -56,5 +56,21 @@
 - Now that all the individual stats exist, I need to join them into one table that is rebuilt from the present day on every refresh. A refresh script calls the API (spaced out to stay within the rate limit), saves the raw responses unchanged, and rebuilds the clean tables from them. The Streamlit app never calls the API itself, it only reads the finished tables.
 - For each team I take their next unplayed fixture and attach the opponent's form, league performance and goal difference, plus the team's own head to head record against that opponent and whether they are home or away.
 - Each metric is scaled to 0-1 and given a weight, and the weighted sum becomes a 0-100 difficulty score. That score is mapped to a colour band with fixed thresholds, and the result is presented in a Streamlit app.
+- I will break down how each metric will contribute with the justification for weightings being above in the explanations for why the metric was first chosen:
+    - Form will contribute joint highest weight at 0.3 and will be scaled by 3*(last 5 games). This will be made up of the opponents form as that's what contributes to the grader.
+    - League performance will be the other joint highest contributor weighted at 0.3 and will be based off current points scaled by 3*(games played). This will be made up of the opponents form as that's what contributes to the grader.
+    - Goal difference will not be as strong an indicator of difficulty as it is already partly encompassed in league performance, however at the extremes it will be beneficial. This will be calculated by ranking goal differences 1-20 for opponent with 1 contributing the full 0.1 weighting and 0 giving nothing.
+    -  Head to head is the second strongest indicator at a weighting of 0.2. It is calculated via 1- (h2h points per game/3) and remains a neutral 0.5 if there are no meetings. Since data is made up of both teams it is fine to use the current teams points as the metric builder.
+    - Home and away will be the joint lowest weighted at 0.1 with goal difference. Based off the study we will make it 0.36 if home and 0.64 if away.
+- I need to look at which table gives me what information. I want to have the following columns:
+    - Team
+    - Next opponent
+    - Home or away
+    - Opponents points tally
+    - Opponents goal difference
+    - Opponents form over last 5
+    - H2h form with opponent over 3 years in PL
+    - Difficulty grader score 
+
 
 
