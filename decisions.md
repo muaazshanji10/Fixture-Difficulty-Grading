@@ -71,6 +71,8 @@
     - Opponents form over last 5
     - H2h form with opponent over 3 years in PL
     - Difficulty grader score 
+- All are fluid and changing as time goes on so we must wrap whatever command we have to run from present time, however the data of past 3 seasons doesn't change and so doesn't need to be refetched everytime. So we can have past 3 seasons as raw and then standings and this season refetched every call. Acknowledging this ensures we are calling within the rate and its faster.
+- First I will paste in all the importing code and code that calls locally raw data.
 
 
 
