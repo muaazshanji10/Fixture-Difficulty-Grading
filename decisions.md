@@ -49,5 +49,9 @@
 - Once every match was reshaped into one row per team, I used ROW_NUMBER() partitioned by team and ordered by date descending to rank each team's games from most recent to oldest, since LIMIT on its own can't restrict rows separately per team, only across the whole table at once.
 - I filtered down to rank 5 or lower per team, then summed the points grouped by team, so the final form score is built off a team's actual last 5 games played rather than assuming exactly one game per gameweek, which avoids the issue of postponed or rearranged fixtures throwing off the count.
 - When running I realised, my data included all future dates and so the sql was querying future games and assuming since they had no result it was a loss, so I had to filter to present date.
+- Now we had to show head to head form, that means we have to bring up the past 3 season data, and also as per brief save it as raw json.
+- The difficulty here again will we that each fixture will need to be viewed differently, ie as a team being the team then being the opponent.
+- We will need to utilise this union all structure we just learnt again. The clean table we build will essentially need to sum the points gained by a team in the last 6 head to head fixtures and then based on the disparity between the two provide a contributing multiplier/scaler to the difficulty fixture grader. 
+- 
 
 
