@@ -73,6 +73,8 @@
     - Difficulty grader score 
 - All are fluid and changing as time goes on so we must wrap whatever command we have to run from present time, however the data of past 3 seasons doesn't change and so doesn't need to be refetched everytime. So we can have past 3 seasons as raw and then standings and this season refetched every call. Acknowledging this ensures we are calling within the rate and its faster.
 - First I will paste in all the importing code and code that calls locally raw data.
+- Created the fixture grader file, which requires all code or sql so far in one file to be able to run and so whilst doing that I softly restructured things as they will be in final form when the streamlit has to access code. What i mean by this is it is in clear segments like fetch code, cleaning code, metrics code and then eventually there will be code for the streamlit.
+
 
 
 
