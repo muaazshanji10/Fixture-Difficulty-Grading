@@ -76,7 +76,7 @@
 - Created the fixture grader file, which requires all code or sql so far in one file to be able to run and so whilst doing that I softly restructured things as they will be in final form when the streamlit has to access code. What i mean by this is it is in clear segments like fetch code, cleaning code, metrics code and then eventually there will be code for the streamlit.
 - Had to ensure the clean standings and matches SQL I was using was pulling data from all seasons.
 - Added in a status column and a games played to ensure I'm not counting null games and since I require games played to attain some of my metrics.
-- 
+- Edited standings_clean column to ensure it had the same name for team so that joins would work correctly. 
 
 
 
