@@ -89,6 +89,14 @@
 - I used LEFT JOIN rather than INNER JOIN so that if a team name doesn't match between two tables the team stays in the table with an empty value, rather than quietly disappearing. COALESCE then turns a missing head to head into the neutral 0.5.
 - I changed every CREATE TABLE to CREATE OR REPLACE TABLE, because the tables now sit in a saved database file and the data changes every time I refresh. Without it the second run would fail as the table already exists, and I want the tables rebuilt from the freshly fetched raw data each time.
 - I connect to a database file (data/grader.duckdb) rather than an in-memory one, so the clean tables, the metric tables and the final fixture grader table are saved and can be read by a separate script. The raw JSON files stay as they came from the API, and the Streamlit app only reads the finished fixture grader table from the database, it never touches the raw files or the API.
+- I now need to present my fidnings and conclusion in a streamlit app that is visible to FPL managers.
+- I am not fully aware how to go from my table to a streamlit app so I will learn through AI.
+- I want the app to present the table colour graded so it is easier to see and a brief title and intro sentence with a small table under breaking down how stats were calculated.
+- I will first learn the formatting of a streamlit, then reproduce it for my table.
+- I created a requirements.txt listing only the packages my code actually imports (requests, python-dotenv, duckdb, pandas and streamlit), so that anyone cloning the project can install everything in one go with pip install -r requirements.txt instead of working out what is missing from error messages. Some package names differ from how they are imported, for example I list python-dotenv but import it as dotenv.
+- I installed streamlit into this project's virtual environment (.venv), which is a private folder of packages just for this project, so it doesn't clash with my other projects. This is different to my .env file, which only holds my API key and is kept out of git. When I first ran the app my terminal was using my rolefit environment instead, so Python couldn't find streamlit. I had to activate the right environment first, and I start the app with "streamlit run" instead of running the file like a normal Python script.
+- I added streamlit to requirements.txt so anyone cloning the project can install everything with one command.
+
 
 
 

@@ -34,4 +34,5 @@ I had a few data sources to choose from for my chosen brief. I had a few things 
 
 ### Future Improvements
 - Plan the data source testing better. I had trusted much of what was on the website for the data available to me. If I had begun by testing the limits of the data I would have perhaps had more accurate metrics like injuries and fixture congestion and not been limited for head to head form for example. Beginning by exhausting the limits of the data available to me is an important lesson for next time, and would have better shaped what API and data source I ended up using.
-- Margain of what they won by, ie win isn't a sufficient metric
+- Had I more time in the future in order to produce a more accurate result, I would've focussed moreso on the accuracy of the statistics and been more thorough in the data science scrutiny that went behind justifying the stats. 
+- 
