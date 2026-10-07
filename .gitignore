@@ -1,2 +1,5 @@
 .env
 .venv
+data/grader.duckdb
+data/grader.duckdb.wal
+.DS_Store
