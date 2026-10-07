@@ -1,6 +1,8 @@
 import duckdb
 import streamlit as st
 
+st.set_page_config(layout="wide")
+
 st.title("Fixture Difficulty Grader")
 st.write(
     "How hard is each Premier League team's next fixture? Each team is scored out of 100 "
@@ -13,13 +15,13 @@ df = con.sql("SELECT * FROM fixture_grader ORDER BY difficulty").df()
 
 
 def colour(score):
-    if score < 35:
+    if score < 20:
         return "background-color: darkgreen; color: white"
-    elif score < 45:
+    elif score < 40:
         return "background-color: green; color: white"
-    elif score < 55:
+    elif score < 60:
         return "background-color: yellow; color: black"
-    elif score < 65:
+    elif score < 80:
         return "background-color: red; color: white"
     return "background-color: darkred; color: white"
 
@@ -28,7 +30,24 @@ styled = (
     df.style.map(colour, subset=["difficulty"])
     .format("{:.3g}", subset=df.select_dtypes("number").columns)
 )
-st.dataframe(styled)
+
+legend = [
+    ("darkgreen", "white", "0-20 Very easy"),
+    ("green", "white", "20-40 Easy"),
+    ("yellow", "black", "40-60 Medium"),
+    ("red", "white", "60-80 Hard"),
+    ("darkred", "white", "80-100 Very hard"),
+]
+
+cols = st.columns(5)
+for col, (bg, fg, label) in zip(cols, legend):
+    col.markdown(
+        f"<div style='background:{bg};color:{fg};padding:8px;"
+        f"text-align:center;border-radius:6px'>{label}</div>",
+        unsafe_allow_html=True,
+    )
+
+st.dataframe(styled, use_container_width=True, hide_index=True, height=740)
 
 st.subheader("How the score is calculated")
 st.markdown(

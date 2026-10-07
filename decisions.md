@@ -98,6 +98,6 @@
 - I added streamlit to requirements.txt so anyone cloning the project can install everything with one command.
 - I added data/grader.duckdb and its .wal file to my .gitignore, as the database is rebuilt by my scripts every time they run so there is no reason to store it on GitHub. I also added .DS_Store, a hidden file macOS creates in folders I open in Finder, which is useless to anyone else. My .env file was already ignored, which keeps my API key out of the repo.
 - For the Streamlit app I load the finished fixture grader table from the database file in read only mode, so it can never clash with my scripts or change the data, and the app never touches the raw files or the API. I colour just the difficulty column with the pandas styler, using a small function that turns each score into one of five colours from dark green (very easy) to dark red (very hard), and the other numbers are shown to 3 significant figures. The rounding only changes how the numbers look, the values underneath stay exact so the colours still use the real score. The table is sorted easiest to hardest so FPL managers can spot the best fixtures first.
-
+- Looked a bit clunky having so added some extra code to format it better.
 
 
