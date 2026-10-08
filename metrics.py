@@ -1,4 +1,6 @@
-import requests, json, time, os, duckdb
+import duckdb
+
+con = duckdb.connect("data/grader.duckdb")
 
 con.sql("""
     CREATE OR REPLACE TABLE form_last_five_games AS
@@ -169,3 +171,5 @@ FROM scaled
 """)
 
 con.sql("SELECT * FROM fixture_grader ORDER BY difficulty DESC").show()
+
+con.close()
