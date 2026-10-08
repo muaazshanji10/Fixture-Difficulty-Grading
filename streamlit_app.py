@@ -1,5 +1,16 @@
+import subprocess
+import sys
 import duckdb
 import streamlit as st
+
+@st.cache_data(ttl=3600/2)
+def refresh_data():
+    for script in ["fetch.py", "clean.py", "metrics.py"]:
+        subprocess.run([sys.executable, script], check=True)
+
+
+with st.spinner("Updating data..."):
+    refresh_data()
 
 st.set_page_config(layout="wide")
 
