@@ -36,9 +36,53 @@ I had a few data sources to choose from for my chosen brief. I had a few things 
 - Learned how to colour the table through the pandas styler, by writing a function that takes a difficulty score and returns a colour, then applying it to just the difficulty column.
 - Used it to understand the environment problems I hit. My terminal was using my other project's virtual environment so Python couldn't find streamlit, which taught me the difference between .venv (a private folder of packages for one project) and .env (my hidden API key), and between installing a package once and starting the app each time with streamlit run.
 - I didn't know how to make the website refresh itself with current data, so I asked Claude. It explained that refreshing the page only re-runs the Streamlit file and not my fetch, clean and metrics scripts, and it taught me the options (a scheduled job on GitHub versus running the scripts from the app itself). I chose to run them from the app and cache the result, and Claude gave me the code for this part, using `subprocess` to run the three scripts and `st.cache_data` to stop it running on every refresh. I then went through it until I understood what each line did, and I tested it myself.
+- I wasn't sure how to prove my project works for someone else, so I asked Claude to explain the fresh clone test. It taught me what a clone is (a copy of the repo that only contains what's on GitHub), why a virtual environment and `requirements.txt` are needed so the packages match, and why I should test in a separate folder with only the README steps. Claude also helped me write the "How to run" section of my README, and I will follow it step by step on a clean clone to check it works.
 
+## How to run it
+
+You can use the live app at (https://fixture-difficulty-grading-cxwttqbkmmsq7wywqi93jh.streamlit.app) with nothing to install. To run it yourself:
+
+**1. Clone the repo and open the folder**
+```bash
+git clone https://github.com/muaazshanji10/fixture-difficulty-grading.git
+cd fixture-difficulty-grading
+```
+
+**2. Create a virtual environment and install the packages**
+```bash
+python -m venv .venv
+source .venv/bin/activate        
+pip install -r requirements.txt
+```
+
+**3. Add your API key**
+
+Get a free key from [football-data.org](https://www.football-data.org/client/register). Copy `.env.example` to a new file called `.env` and put your key in it:
+```
+football_data_api_key=your-key-here
+```
+`.env` is git-ignored so the key never reaches GitHub.
+
+**4. Run the app**
+```bash
+python -m streamlit run streamlit_app.py
+```
+It opens at `http://localhost:8501`. The first load takes about 30 seconds because the app runs the pipeline itself before showing the table. After that the data is cached for 30 minutes.
+
+### What the app runs, in order
+1. `fetch.py` downloads Premier League matches (current and past seasons) and the current standings from the API into `data/raw/`. Past seasons are only downloaded once, and the current ones are fetched fresh each run.
+2. `clean.py` loads the raw JSON into DuckDB and cleans it into `matches_clean` and `standings_clean`.
+3. `metrics.py` builds the form and head-to-head tables, then the final `fixture_grader` table with the 0-100 difficulty score.
+4. `streamlit_app.py` reads `fixture_grader` and shows the colour-graded table.
+
+You can also run steps 1-3 yourself, in this order, with `python fetch.py`, `python clean.py`, `python metrics.py`.
+
+### Troubleshooting
+- **403 error from the API:** your key is missing or wrong. Check `.env`.
+- **DuckDB lock error:** something else (like a notebook) has `data/grader.duckdb` open. Close it and try again.
+- **`No module named ...`:** make sure the virtual environment is activated and you ran `pip install -r requirements.txt`.
 
 ### Future Improvements
 - Plan the data source testing better. I had trusted much of what was on the website for the data available to me. If I had begun by testing the limits of the data I would have perhaps had more accurate metrics like injuries and fixture congestion and not been limited for head to head form for example. Beginning by exhausting the limits of the data available to me is an important lesson for next time, and would have better shaped what API and data source I ended up using.
-- Had I more time in the future in order to produce a more accurate result, I would've focussed moreso on the accuracy of the statistics and been more thorough in the data science scrutiny that went behind justifying the stats. 
-- 
+- Had I more time in the future in order to produce a more accurate result, I would've focused more on the accuracy of the statistics and been more thorough in the data science scrutiny that went behind justifying the stats. 
+- In my introduction I said I would compare my model to The Athletic’s. I instead compared it to the official FPL Fixture Difficulty Rating, since that’s what FPL managers actually use and I could read it directly. I used Spearman’s rank correlation. Spearman’s ignores the actual numbers, ranks every fixture from hardest to easiest in each model, then measures how closely those two rankings line up. It gives a score from -1 (completely opposite order) to 1 (identical order). I chose it because the two models aren’t on the same scale. Mine is a 0-100 score and the FPL only uses 2 to 5, so comparing raw values would have been meaningless. What I care about is whether we agree on which fixtures are harder. I compared the 20 gameweek 6 fixtures and got a Spearman score of 0.59 (p = 0.006), so the agreement is very unlikely to be down to chance. The FPL only has four grades with lots of ties, so the best any model could score against it is about 0.92, which means I reached roughly 64% of the maximum. Every disagreement was only one grade out. The catch is that simply ranking by the opponent’s league points scores 0.57, and my grader’s ranking matches that table at 0.975, so my extra metrics weren’t adding much. Looking back, my form metric was identical to the opponent’s points, so it was counting league position twice rather than looking at their last 5 games. My conclusion is that the grader is moderately similar to the FPL and captures real difficulty, but it isn’t yet better than a simple league table.

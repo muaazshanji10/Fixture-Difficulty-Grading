@@ -102,5 +102,6 @@
 - Streamlit runs the script top to bottom, so order matters. I got an "undefined name" error when I put the table line above the code that creates the styled table. It also has to be started with `python -m streamlit run streamlit_app.py` from my project `.venv`, because my terminal was using a different environment where Streamlit wasn't installed.
 - I deployed it on Streamlit Community Cloud from my public GitHub repo, which needs a `requirements.txt` to install the packages. The deployed app never needs my API key, because the API is only called when I run the pipeline locally and the app just reads the finished table. My `.env` stays on my laptop.
 - I wanted the app to refresh every so often so that we actually got the current result, but I realised having solely website code on streamlit meant that every refresh only the streamlit code would be refreshed not the fixture grading code and so I had to add it in to the streamlit code itself at the top. I also had to ensure it didn't refresh everytime since if two people opened at once I may breach my API limit and so I thought a sensible refresh would be every 30 mins. So after 30 mins if someone opens it along with their refresh there will be fresh data.
+- Tested a fresh clone successfully.
 
 
